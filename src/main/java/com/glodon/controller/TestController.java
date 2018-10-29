@@ -17,7 +17,6 @@ public class TestController {
 
     @RequestMapping(value = "/consumer", method = RequestMethod.GET)
     public String forTest(){
-
         return restTemplate.getForEntity("http://PROVIDER-SERVICE/hello", String.class).getBody();
     }
 
