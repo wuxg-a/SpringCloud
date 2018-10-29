@@ -7,19 +7,18 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 @RestController
 public class TestController {
 
     @Autowired
-    private DiscoveryClient discoveryClient;
+    private RestTemplate restTemplate;
 
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
+    @RequestMapping(value = "/consumer", method = RequestMethod.GET)
     public String forTest(){
 
-        ServiceInstance instance = discoveryClient.getLocalServiceInstance();
-        System.out.println("/hello, host:" + instance.getHost() + ",service_id: " + instance.getServiceId());
-        return "HelloWorld!";
+        return restTemplate.getForEntity("http://PROVIDER-SERVICE/hello", String.class).getBody();
     }
 
 }
